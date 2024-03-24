@@ -1,6 +1,6 @@
-Use this template on GitHub or [download the code](https://github.com/SlimeCubed/ExampleSlugBaseMod/archive/refs/heads/master.zip), whichever is easiest.
-
-Links:
-- [Template Walkthrough](https://slimecubed.github.io/slugbase/articles/template.html) for a guide to this template.
-- [SlugBase Docs](https://slimecubed.github.io/slugbase/) for information regarding custom slugcats.
-- [Modding Wiki](https://rainworldmodding.miraheze.org/wiki/Downpour_Reference/Mod_Directories) for `modinfo.json` documentation.
+TODO:
+- Implement 'Drain' cycle end type.
+- Fully map out AP.
+- Bring AP to at least 25% completion.
+- Begin mapping out VR and WZ.
+- Bring VR and WZ to at least 10% completion.
