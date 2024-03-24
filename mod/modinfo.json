@@ -1,0 +1,9 @@
+﻿{
+	"id": "pogger.atollCat",
+	"name": "The Atoll",
+	"version": "0.1.0",
+	"authors": "Pogger",
+	"description": "hope you like swimming!",
+	"requirements": [ "slime-cubed.slugbase" ],
+	"requirements_names": [ "SlugBase" ]
+}

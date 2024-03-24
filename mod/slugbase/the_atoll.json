@@ -1,0 +1,26 @@
+{
+	"id": "atollCat",
+	"name": "The Atoll",
+	"description": "A sturdy aquatic animal that can't last too long on land.",
+	"features": {
+		"color": "9cf0a4",
+		"auto_grab_batflies": false,
+		"weight": [ 1.1, 0.9 ],
+		"food_min": 4,
+		"food_max": 6,
+		"start_room": "DS_C04",
+		"atoll/water_stats": true,
+		"spearWaterFriction":  0.3,
+		"select_menu_scene": "Slugcat_Atoll",
+		"select_menu_scene_ascended": "Ghost_Atoll",
+		"karma_cap": 4,
+		"karma": 3,
+		"diet": {
+			"base": "White",
+			"corpses": 0,
+			"meat": 0,
+			"plants": 1.25
+		},
+		"walk_speed": 0.7
+	}
+}
