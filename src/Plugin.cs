@@ -68,7 +68,7 @@ namespace SlugTemplate
 
         private void waterBreather(On.Player.orig_LungUpdate orig, Player self)
         {
-            // Call original method if the slugcat is not the Atoll
+            // Call original method if the player isn't the Atoll
             if (!isAtoll(self))
             {
                 orig(self);
@@ -80,6 +80,10 @@ namespace SlugTemplate
                 self.swimCycle = 0f;
 
                 self.airInLungs -= 1f / (40f * (self.lungsExhausted ? 4.5f : 9f) * ((self.input[0].y == 1 && self.input[0].x == 0 && self.airInLungs < 0.33333334f) ? 1.5f : 1f) * (self.room.game.setupValues.lungs / 100f)) * self.slugcatStats.lungsFac;
+                if (isExtraDry(self)) //breath is lost twice as fast in extra dry rooms
+                {
+                    self.airInLungs -= 1f / (40f * (self.lungsExhausted ? 4.5f : 9f) * ((self.input[0].y == 1 && self.input[0].x == 0 && self.airInLungs < 0.33333334f) ? 1.5f : 1f) * (self.room.game.setupValues.lungs / 100f)) * self.slugcatStats.lungsFac;
+                }
 
                 if (self.airInLungs <= 0f && self.mainBodyChunk.submersion == 0f && self.bodyChunks[1].submersion < 0.5f)
                 {
@@ -146,9 +150,9 @@ namespace SlugTemplate
         private void changeBuoy(On.Player.orig_UpdateMSC orig, Player self)
         {
             orig(self);
-            if (isAzureCat(self)) //looks at the .json file and sees if there's a value associated with the PlayerFeature
+            if (isAzureCat(self)) 
             {
-                self.buoyancy = 0.9f; //sets buoyancy based on the value gotten by the if statement
+                self.buoyancy = 0.9f;
             }
         }
 
@@ -159,11 +163,21 @@ namespace SlugTemplate
 
         private bool isHumidEnough(Room room)
         {
+            if (room.world.region.name == "UJ")
+            {
+                return true;
+            }
             for(int i = 0; i < 3; i++)
             {
-                if (room.roomSettings.GetEffectAmount(roomRainSettings[i]) > 0) return true;
+                if (room.roomSettings.GetEffectAmount(roomRainSettings[i]) > 0.2f) return true;
             }
             return false;
+        }
+
+        private bool isExtraDry(Player self)
+        {
+            string name = self.room.world.region.name;
+            return self.room.world.game.StoryCharacter == AtollName && (name == "DM" || name == "SH");
         }
 
         private void initLungs(On.Player.orig_ctor orig, Player self, AbstractCreature creature, World world)
@@ -213,15 +227,9 @@ namespace SlugTemplate
         void karmaLavaShield(On.Creature.orig_Update orig, Creature self, bool eu)
         {
             orig(self, eu);
-            if((self is Player player) && isAzureCat(player)){
-                if (player.KarmaCap >= 9)
-                {
-                    self.abstractCreature.lavaImmune = true;
-                }
-                else
-                {
-                    self.abstractCreature.lavaImmune = false;
-                }
+            if(self is Player player && isAzureCat(player))
+            {
+                self.abstractCreature.lavaImmune = player.KarmaCap >= 9;
             }
         }
 
@@ -240,7 +248,7 @@ namespace SlugTemplate
             if(source.owner is Player player && isAzureCat(player))
             {
                 damage *= isAtoll(player) && player.submerged ? 3f : 0.3f;
-                damage *= isFloodRaiser(player) && player.submerged ? 2f : 0.8f;
+                damage *= isFloodRaiser(player) && player.submerged ? 1.2f : 0.8f;
             }
             orig(self, source, directionAndMomentum, hitChunk, hitAppendage, type, damage, stunBonus);
         }
