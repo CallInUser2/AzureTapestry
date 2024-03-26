@@ -17,7 +17,7 @@ namespace SlugTemplate
     [BepInPlugin(MOD_ID, "The Atoll", "0.1.0")]
     class Plugin : BaseUnityPlugin
     {
-        private const string MOD_ID = "pogger.atollCat";
+        private const string MOD_ID = "azureTeam.azureTapestry";
         public static readonly RoomRain.DangerType Drain = new RoomRain.DangerType("Drain", true);
         public static readonly SlugcatStats.Name AtollName = new SlugcatStats.Name("azureTeam.Atoll", false);
         public static readonly SlugcatStats.Name FRName = new SlugcatStats.Name("azureTeam.FloodRaiser", false);
@@ -169,7 +169,7 @@ namespace SlugTemplate
             }
             for(int i = 0; i < 3; i++)
             {
-                if (room.roomSettings.GetEffectAmount(roomRainSettings[i]) > 0.2f) return true;
+                if (room.roomSettings.GetEffectAmount(roomRainSettings[i]) > 0.6f) return true;
             }
             return false;
         }
@@ -188,7 +188,13 @@ namespace SlugTemplate
         }
         private bool spearPuller(On.Player.orig_CanIPickThisUp orig, Player self, PhysicalObject obj)
         {
-            return isAtoll(self) ? obj is Spear s && s.mode == Weapon.Mode.StuckInWall && self.submerged : orig(self, obj);
+            if(obj is Spear s && s.mode == Weapon.Mode.StuckInWall && isAtoll(self))
+            {
+                return self.submerged;
+            }
+            return orig(self, obj);
+
+
         }
 
         /*void inverseFlood(On.RoomRain.orig_Update orig, RoomRain self, bool eu)

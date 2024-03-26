@@ -1,9 +1,9 @@
 ﻿{
-	"id": "pogger.atollCat",
-	"name": "The Atoll",
+	"id": "azureTeam.AzureTapestry",
+	"name": "Azure Tapestry",
 	"version": "0.1.0",
-	"authors": "Pogger",
-	"description": "hope you like swimming!",
+	"authors": "Azure Tapestry Team",
+	"description": "TBA",
 	"requirements": [ "slime-cubed.slugbase" ],
 	"requirements_names": [ "SlugBase" ]
 }
